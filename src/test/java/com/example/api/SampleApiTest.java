@@ -4,8 +4,14 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import io.qameta.allure.*;
 
 
+@Epic("Sample API Testing")
+@Feature("Sample Feature")
+@Story("Basic APi Test")
+@Owner("Advait Katikar")
+@Severity(SeverityLevel.CRITICAL)
 public class SampleApiTest {
     @BeforeAll
     public static void setup(){
@@ -13,6 +19,7 @@ public class SampleApiTest {
     }
 
     @Test
+    @Description("Verify the Get request for all posts returns 200")
     public void testGetPosts(){
         given().log().all()
                 .when()
@@ -23,6 +30,7 @@ public class SampleApiTest {
     }
 
     @Test
+    @Description("Verify the Get request for single posts returns 200")
     public void testGetSinglePost(){
         given()
                 .log().all()
@@ -35,6 +43,7 @@ public class SampleApiTest {
     }
 
     @Test
+    @Description("Verify the POST request returns 201")
     public void testCreatePost(){
         String payload = """
                 {
