@@ -10,18 +10,25 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: UseJavaVersion@1
+  inputs:
+    version: '17'
+    distribution: 'zulu'   
+  displayName: 'Install Java 17'
+
 - task: Maven@3
   displayName: 'Maven Build'
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'clean test'
     options: '-Dmaven.test.failure.ignore=false'
-    javaHomeOption: 'PreInstalled'
+    javaHomeOption: 'JAVA_HOME'
     mavenVersionOption: 'Default'
     publishJUnitResults: true
     testResultsFiles: '*/surefire-reports/TEST-.xml'
 
 - script: |
+    echo JAVA_HOME is $JAVA_HOME
     java -version
     mvn -version
-  displayName: 'Check Java and Maven Version'    
+  displayName: 'Check Java and Maven Version'
