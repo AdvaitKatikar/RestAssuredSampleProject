@@ -23,7 +23,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'clean test'
     options: '-Dmaven.test.failure.ignore=false'
-    javaHomeOption: 'PreInstalled'
+    javaHomeOption: 'JAVA_HOME'
     mavenVersionOption: 'Default'
     publishJUnitResults: true
     testResultsFiles: '*/surefire-reports/TEST-.xml'
