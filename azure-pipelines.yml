@@ -1,0 +1,25 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    echo "Running tests with Maven"
+    java -version
+    mvn -version
+    mvn clean test -Dmaven.test.failure.ignore=false
+  displayName: 'Build and Run Tests with Maven'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '*/surefire-reports/TEST-.xml'
+    testResultsFormat: 'JUnit'
+    failTaskOnFailedTests: true
+  displayName: 'Publish Test Results'
