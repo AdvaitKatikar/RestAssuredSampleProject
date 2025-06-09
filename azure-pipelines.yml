@@ -10,26 +10,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: JavaToolInstaller@0
-  displayName: 'Install Java 17'
-  inputs:
-    versionSpec: '17'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
-
-- task: Maven@3
-  displayName: 'Maven Build'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'clean test'
-    options: '-Dmaven.test.failure.ignore=false'
-    javaHomeOption: 'JAVA_HOME'
-    mavenVersionOption: 'Default'
-    publishJUnitResults: true
-    testResultsFiles: '*/surefire-reports/TEST-.xml'
-
 - script: |
-    echo JAVA_HOME is $JAVA_HOME
+    echo "Running tests with Maven"
     java -version
     mvn -version
-  displayName: 'Check Java and Maven Version'
+    mvn clean test -Dmaven.test.failure.ignore=false
+  displayName: 'Build and Run Tests with Maven'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '*/surefire-reports/TEST-.xml'
+    testResultsFormat: 'JUnit'
+    failTaskOnFailedTests: true
+  displayName: 'Publish Test Results'
