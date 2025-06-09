@@ -10,13 +10,18 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'Microsoft'
+
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'clean test'
     options: '-Dmaven.test.failure.ignore=false'
-    javaHomeOption: 'Path'
-    jdkUserInputPath: '/usr/lib/jvm/java-17-openjdk-amd64'
+    javaHomeOption: 'PreInstalled'
     mavenVersionOption: 'Default'
     publishJUnitResults: true
     testResultsFiles: '*/surefire-reports/TEST-.xml'    
