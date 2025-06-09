@@ -19,7 +19,7 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testResultsFiles: '*/surefire-reports/TEST-.xml'
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
     testResultsFormat: 'JUnit'
     failTaskOnFailedTests: true
   displayName: 'Publish Test Results'
