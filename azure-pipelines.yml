@@ -10,11 +10,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: UseJavaVersion@1
-  inputs:
-    version: '17'
-    distribution: 'zulu'   
+- task: JavaToolInstaller@0
   displayName: 'Install Java 17'
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
 
 - task: Maven@3
   displayName: 'Maven Build'
@@ -22,7 +23,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'clean test'
     options: '-Dmaven.test.failure.ignore=false'
-    javaHomeOption: 'JAVA_HOME'
+    javaHomeOption: 'PreInstalled'
     mavenVersionOption: 'Default'
     publishJUnitResults: true
     testResultsFiles: '*/surefire-reports/TEST-.xml'
